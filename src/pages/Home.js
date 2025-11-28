@@ -21,18 +21,10 @@ export default function Home() {
   }, []);
 
   if (loading)
-    return (
-      <p style={{ textAlign: "center", marginTop: 50, color: "#666" }}>
-        Loading projects...
-      </p>
-    );
+    return <p style={{ textAlign: "center", marginTop: 50 }}>Loading projects...</p>;
 
   if (projects.length === 0)
-    return (
-      <p style={{ textAlign: "center", marginTop: 50, color: "#666" }}>
-        No projects found.
-      </p>
-    );
+    return <p style={{ textAlign: "center", marginTop: 50 }}>No projects found.</p>;
 
   return (
     <div style={{ padding: "60px 20px", fontFamily: "Arial" }}>
@@ -51,7 +43,7 @@ export default function Home() {
       >
         {projects.map((p) => (
           <div
-            key={p._id}
+            key={p._id} // Unique key
             style={{
               background: "#2c2c2c",
               borderRadius: 12,
@@ -60,12 +52,10 @@ export default function Home() {
               display: "flex",
               flexDirection: "column",
               boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-              transition: "transform 0.3s ease, box-shadow 0.3s ease",
             }}
           >
-            {/* Project title as link to details */}
             <Link
-              to={`/projects/${p._id}/comments`}
+              to={`/projects/${p._id}`} // Fixed route
               style={{ fontSize: 22, fontWeight: 600, marginBottom: 10, color: "#facc15", textDecoration: "none" }}
             >
               {p.title}
