@@ -1,30 +1,21 @@
 // src/components/Navbar.js
-import React, { useContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+
 import {
   FaUserCircle,
   FaTools,
   FaProjectDiagram,
   FaGraduationCap,
   FaBriefcase,
-  FaSignInAlt,
-  FaSignOutAlt,
   FaBars,
   FaTimes,
 } from "react-icons/fa";
 
 export default function Navbar() {
-  const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-    setIsOpen(false);
-  };
+  const location = useLocation();
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
@@ -39,64 +30,46 @@ export default function Navbar() {
       left: 0,
       width: "100%",
       zIndex: 50,
-      background: "linear-gradient(to right, #6366f1, #a855f7, #ec4899)",
-      boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
+      background: "linear-gradient(135deg, rgb(44, 62, 80), rgb(20, 28, 38))", // updated gradient
+      boxShadow: "0px 4px 12px rgba(0,0,0,0.4)",
+      backdropFilter: "blur(6px)",
     },
     wrapper: {
       maxWidth: "1200px",
       margin: "0 auto",
-      padding: "16px 24px",
+      padding: "14px 24px",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
     },
     logo: {
-      color: "white",
-      fontSize: "24px",
+      color: "#facc15",
+      fontSize: "26px",
       fontWeight: "bold",
       textDecoration: "none",
+      letterSpacing: "1px",
     },
     desktopMenu: {
       display: "flex",
-      gap: "20px",
+      gap: "24px",
       fontWeight: "500",
       alignItems: "center",
     },
-    link: {
-      color: "white",
+    link: (active) => ({
+      color: active ? "#facc15" : "#fff",
       textDecoration: "none",
       display: "flex",
       alignItems: "center",
-      gap: "6px",
-      transition: "0.3s",
-    },
-    buttonLogin: {
-      display: "flex",
-      alignItems: "center",
-      gap: "6px",
-      background: "#facc15",
-      color: "black",
-      padding: "8px 16px",
-      borderRadius: "20px",
-      textDecoration: "none",
-      fontWeight: "600",
-      transition: "0.3s",
-    },
-    buttonLogout: {
-      display: "flex",
-      alignItems: "center",
-      gap: "6px",
-      background: "#dc2626",
-      color: "white",
-      padding: "8px 16px",
-      borderRadius: "20px",
-      border: "none",
-      cursor: "pointer",
-      fontWeight: "600",
-      transition: "0.3s",
-    },
+      gap: "8px",
+      padding: "6px 12px",
+      borderRadius: "8px",
+      transition: "all 0.3s ease",
+      backgroundColor: active ? "rgba(250,204,21,0.1)" : "transparent",
+      fontSize: "16px",
+      fontWeight: "500",
+    }),
     mobileBtn: {
-      color: "white",
+      color: "#fff",
       fontSize: "28px",
       background: "none",
       border: "none",
@@ -104,94 +77,73 @@ export default function Navbar() {
       display: "block",
     },
     mobileMenu: {
-      background: "linear-gradient(to bottom, #6366f1, #a855f7, #ec4899)",
-      width: "100%",
+      background: "linear-gradient(135deg, rgb(44, 62, 80), rgb(20, 28, 38))",
+      width: "90%",
+      margin: "10px auto",
       padding: "20px",
       display: "flex",
       flexDirection: "column",
       gap: "16px",
-      color: "white",
+      borderRadius: "12px",
+      color: "#fff",
       fontWeight: "500",
+      boxShadow: "0 8px 20px rgba(0,0,0,0.4)",
     },
   };
 
   const menuItems = [
-    { name: "Profile", path: "/profile", icon: <FaUserCircle /> },
+    { name: "Profile", path: "/", icon: <FaUserCircle /> },
     { name: "Skills", path: "/skills", icon: <FaTools /> },
     { name: "Projects", path: "/projects", icon: <FaProjectDiagram /> },
     { name: "Education", path: "/education", icon: <FaGraduationCap /> },
     { name: "Work", path: "/work", icon: <FaBriefcase /> },
+    { name: "Contact", path: "/contact", icon: <FaUserCircle /> },
   ];
 
   return (
     <nav style={styles.nav}>
       <div style={styles.wrapper}>
-        {/* Logo */}
         <Link to="/" style={styles.logo}>
           DevShowcase
         </Link>
 
-        {/* Desktop Menu */}
-        {isDesktop && (
+        {isDesktop ? (
           <div style={styles.desktopMenu}>
             {menuItems.map((item) => (
-              <Link key={item.name} to={item.path} style={styles.link}>
+              <Link
+                key={item.name}
+                to={item.path}
+                style={styles.link(location.pathname === item.path)}
+              >
                 {item.icon} {item.name}
               </Link>
             ))}
-
-            {user ? (
-              <button onClick={handleLogout} style={styles.buttonLogout}>
-                <FaSignOutAlt /> Logout
-              </button>
-            ) : (
-              <Link to="/login" style={styles.buttonLogin}>
-                <FaSignInAlt /> Login
-              </Link>
-            )}
           </div>
-        )}
-
-        {/* Mobile Menu Button */}
-        {!isDesktop && (
-          <button
-            style={styles.mobileBtn}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
+        ) : (
+          <>
+            <button
+              style={styles.mobileBtn}
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <FaTimes /> : <FaBars />}
+            </button>
+            {isOpen && (
+              <div style={styles.mobileMenu}>
+                {menuItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    onClick={() => setIsOpen(false)}
+                    style={styles.link(location.pathname === item.path)}
+                  >
+                    {item.icon} {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
-
-      {/* Mobile Menu */}
-      {!isDesktop && isOpen && (
-        <div style={styles.mobileMenu}>
-          {menuItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              onClick={() => setIsOpen(false)}
-              style={styles.link}
-            >
-              {item.icon} {item.name}
-            </Link>
-          ))}
-
-          {user ? (
-            <button onClick={handleLogout} style={styles.buttonLogout}>
-              <FaSignOutAlt /> Logout
-            </button>
-          ) : (
-            <Link
-              to="/login"
-              onClick={() => setIsOpen(false)}
-              style={styles.buttonLogin}
-            >
-              <FaSignInAlt /> Login
-            </Link>
-          )}
-        </div>
-      )}
     </nav>
   );
 }

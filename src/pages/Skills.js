@@ -6,60 +6,62 @@ export default function Skills() {
     <>
       <style>{`
         .skills-section {
-          min-height: 80vh;
-          background-color: #f5f5f5;
+          min-height: 90vh;
+          background: linear-gradient(135deg, rgb(44, 62, 80), rgb(20, 28, 38));
           padding: 64px 24px;
-          font-family: Arial, sans-serif;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          color: #fff;
         }
 
         .skills-header {
           text-align: center;
-          margin-bottom: 48px;
+          margin-bottom: 64px;
         }
 
         .skills-title {
-          font-size: 36px;
-          font-weight: bold;
+          font-size: 40px;
+          font-weight: 900;
           margin: 0;
+          color: #facc15;
         }
 
         .skills-subtitle {
           margin-top: 12px;
           font-size: 18px;
-          color: #555;
+          color: #ccc;
         }
 
         .skills-grid {
           display: grid;
-          gap: 24px;
+          gap: 28px;
           grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         }
 
         .skill-card {
-          background: white;
+          background: #1f1f1f;
           padding: 24px;
           border-radius: 16px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          border: 1px solid #e0e0e0;
+          box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+          border: 1px solid rgba(250,204,21,0.2);
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           display: flex;
           flex-direction: column;
         }
 
         .skill-card:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+          transform: translateY(-8px);
+          box-shadow: 0 15px 25px rgba(250,204,21,0.5);
         }
 
         .skill-card h3 {
-          font-size: 18px;
-          color: #4f46e5;
-          margin-bottom: 12px;
+          font-size: 20px;
+          color: #facc15;
+          margin-bottom: 10px;
         }
 
         .skill-card p {
           font-size: 14px;
-          color: #555;
+          color: #ccc;
           margin-bottom: 12px;
         }
 
@@ -72,38 +74,40 @@ export default function Skills() {
           justify-content: space-between;
           font-size: 14px;
           margin-bottom: 4px;
-          color: #444;
+          color: #ddd;
         }
 
         .badge-bar {
           width: 100%;
-          height: 8px;
-          background-color: #ddd;
-          border-radius: 4px;
+          height: 10px;
+          background-color: #333;
+          border-radius: 6px;
           overflow: hidden;
         }
 
         .badge-fill {
           height: 100%;
-          background: linear-gradient(90deg, #4f46e5, #818cf8);
-          border-radius: 4px;
-          transition: width 0.6s ease;
+          background: linear-gradient(90deg, #facc15, #eab308);
+          border-radius: 6px;
+          transition: width 0.8s ease;
         }
 
         .contact-button {
           display: inline-block;
           margin-top: 40px;
-          background-color: #4f46e5;
-          color: white;
-          font-weight: 500;
-          padding: 12px 24px;
-          border-radius: 12px;
+          background: #facc15;
+          color: #0f0f0f;
+          font-weight: 600;
+          padding: 14px 28px;
+          border-radius: 25px;
           text-decoration: none;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          box-shadow: 0 8px 20px rgba(250,204,21,0.4);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .contact-button:hover {
-          transform: scale(1.03);
+          transform: scale(1.05);
+          box-shadow: 0 12px 25px rgba(250,204,21,0.6);
         }
       `}</style>
 
@@ -114,7 +118,6 @@ export default function Skills() {
         </div>
 
         <div className="skills-grid">
-          {/* Programming Languages */}
           <SkillCard
             title="Programming Languages"
             description="JavaScript · TypeScript · Python · SQL"
@@ -125,8 +128,6 @@ export default function Skills() {
               { name: "SQL", level: 80 },
             ]}
           />
-
-          {/* Frontend */}
           <SkillCard
             title="Frontend Development"
             description="React.js · Next.js · HTML5 · CSS3 · Material-UI"
@@ -137,8 +138,6 @@ export default function Skills() {
               { name: "Material-UI", level: 75 },
             ]}
           />
-
-          {/* Backend */}
           <SkillCard
             title="Backend & APIs"
             description="Node.js · Express · Django · REST · GraphQL"
@@ -149,8 +148,6 @@ export default function Skills() {
               { name: "GraphQL", level: 60 },
             ]}
           />
-
-          {/* Databases */}
           <SkillCard
             title="Databases"
             description="MongoDB · PostgreSQL · SQL Server"
@@ -160,8 +157,6 @@ export default function Skills() {
               { name: "SQL Server", level: 70 },
             ]}
           />
-
-          {/* DevOps & Tools */}
           <SkillCard
             title="DevOps & Tools"
             description="Git · Docker · Kubernetes · Jenkins · CI/CD"
@@ -171,33 +166,11 @@ export default function Skills() {
               { name: "Kubernetes", level: 50 },
             ]}
           />
-
-          {/* Testing & Cloud */}
-          <SkillCard
-            title="Testing & Cloud"
-            description="Jest · Cypress · AWS · Azure"
-            skills={[
-              { name: "Jest", level: 75 },
-              { name: "Cypress", level: 65 },
-              { name: "AWS", level: 60 },
-            ]}
-          />
-
-          {/* Methodologies */}
-          <SkillCard
-            title="Methodologies & Concepts"
-            description="Agile · OOP · Web Accessibility"
-            skills={[
-              { name: "Agile", level: 85 },
-              { name: "OOP", level: 80 },
-              { name: "Accessibility", level: 70 },
-            ]}
-          />
         </div>
 
         <div style={{ textAlign: "center" }}>
           <motion.a
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             href="#contact"
             className="contact-button"

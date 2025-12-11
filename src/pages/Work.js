@@ -1,5 +1,5 @@
-// src/pages/Work.js
 import React from "react";
+import { FaBriefcase } from "react-icons/fa";
 
 const experiences = [
   {
@@ -32,52 +32,125 @@ const experiences = [
 
 export default function Work() {
   const styles = {
-    container: {
-      maxWidth: "900px",
-      margin: "80px auto 50px",
-      padding: "20px",
-      fontFamily: "Arial, sans-serif",
-      color: "#eee",
+    section: {
+      minHeight: "100vh",
+      padding: "80px 20px",
+      background: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
+      color: "#fff",
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      textAlign: "center",
     },
     heading: {
-      fontSize: "2rem",
-      fontWeight: "bold",
-      marginBottom: "20px",
+      fontSize: "3rem",
+      fontWeight: "900",
       color: "#facc15",
+      marginBottom: "60px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: "12px",
+    },
+    timeline: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "30px",
+      maxWidth: "900px",
+      margin: "0 auto",
     },
     jobCard: {
-      backgroundColor: "#1f1f1f",
-      borderRadius: "8px",
-      padding: "20px",
-      marginBottom: "20px",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+      background: "rgba(255, 255, 255, 0.05)",
+      borderRadius: "15px",
+      padding: "25px",
+      boxShadow: "0 10px 25px rgba(0,0,0,0.4)",
+      position: "relative",
+      overflow: "hidden",
+      transition: "all 0.3s ease",
     },
-    jobTitle: { fontSize: "1.5rem", fontWeight: "bold", marginBottom: "5px" },
-    company: { fontSize: "1.2rem", fontWeight: "500", color: "#facc15" },
-    period: { fontSize: "0.9rem", color: "#aaa", marginBottom: "10px" },
-    ul: { paddingLeft: "20px" },
-    li: { marginBottom: "6px", lineHeight: "1.5" },
+    jobCardBefore: {
+      content: "''",
+      position: "absolute",
+      left: "0",
+      top: "0",
+      width: "6px",
+      height: "100%",
+      background: "#facc15",
+      borderRadius: "8px 0 0 8px",
+    },
+    jobCardHover: {
+      transform: "translateY(-8px)",
+      boxShadow: "0 15px 30px rgba(0,0,0,0.6)",
+    },
+    jobHeader: {
+      marginBottom: "15px",
+      textAlign: "left",
+    },
+    jobTitle: {
+      fontSize: "1.8rem",
+      fontWeight: "700",
+      marginBottom: "6px",
+    },
+    jobCompany: {
+      display: "block",
+      fontSize: "1.1rem",
+      fontWeight: "500",
+      color: "#facc15",
+      marginBottom: "6px",
+    },
+    jobPeriod: {
+      display: "block",
+      fontSize: "0.9rem",
+      color: "#ccc",
+      marginBottom: "10px",
+    },
+    responsibilities: {
+      textAlign: "left",
+      paddingLeft: "20px",
+      listStyleType: "disc",
+    },
+    responsibilityItem: {
+      marginBottom: "8px",
+      lineHeight: "1.6",
+      transition: "color 0.3s ease",
+    },
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>Work Experience</h2>
-      {experiences.map((job, index) => (
-        <div key={index} style={styles.jobCard}>
-          <div style={styles.jobTitle}>{job.title}</div>
-          <div style={styles.company}>
-            {job.company} | {job.location}
+    <section style={styles.section}>
+      <h2 style={styles.heading}>
+        <FaBriefcase style={{ fontSize: "2.5rem" }} /> Work Experience
+      </h2>
+
+      <div style={styles.timeline}>
+        {experiences.map((job, index) => (
+          <div
+            key={index}
+            style={styles.jobCard}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-8px)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+          >
+            <div style={{ ...styles.jobCardBefore, position: "absolute", left: 0, top: 0, width: "6px", height: "100%", background: "#facc15", borderRadius: "8px 0 0 8px" }}></div>
+            <div style={styles.jobHeader}>
+              <h3 style={styles.jobTitle}>{job.title}</h3>
+              <span style={styles.jobCompany}>
+                {job.company} | {job.location}
+              </span>
+              <span style={styles.jobPeriod}>{job.period}</span>
+            </div>
+            <ul style={styles.responsibilities}>
+              {job.responsibilities.map((resp, i) => (
+                <li
+                  key={i}
+                  style={styles.responsibilityItem}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#facc15")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "#fff")}
+                >
+                  {resp}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div style={styles.period}>{job.period}</div>
-          <ul style={styles.ul}>
-            {job.responsibilities.map((resp, i) => (
-              <li key={i} style={styles.li}>
-                {resp}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </section>
   );
 }
